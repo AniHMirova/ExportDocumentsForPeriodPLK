@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="wgt">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/wgt" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/wgt" recursive="false" />
+  </library>
+</component>

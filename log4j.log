@@ -1,0 +1,54 @@
+0 [main] ERROR com.documentum.fc.common.impl.logging.LoggingConfigurator  - Problem locating log4j configuration
+1 [main] WARN com.documentum.fc.common.impl.logging.LoggingConfigurator  - Using default log4j configuration
+3 [main] ERROR com.documentum.fc.common.impl.preferences.PreferencesManager  - [DFC_PREFERENCE_LOAD_FAILED] Failed to load persistent preferences from null
+java.io.FileNotFoundException: dfc.properties
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.locateMainPersistentStore(PreferencesManager.java:378)
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.readPersistentProperties(PreferencesManager.java:329)
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.<init>(PreferencesManager.java:37)
+	at com.documentum.fc.common.DfPreferences.initialize(DfPreferences.java:64)
+	at com.documentum.fc.common.DfPreferences.getInstance(DfPreferences.java:43)
+	at com.documentum.fc.client.DfSimpleDbor.getDefaultDbor(DfSimpleDbor.java:78)
+	at com.documentum.fc.client.DfSimpleDbor.<init>(DfSimpleDbor.java:66)
+	at com.documentum.fc.client.DfClient$ClientImpl.<init>(DfClient.java:350)
+	at com.documentum.fc.client.DfClient.<clinit>(DfClient.java:766)
+	at com.documentum.com.DfClientX.getLocalClient(DfClientX.java:43)
+	at SessionManager.createSessionManager(SessionManager.java:33)
+	at SessionManager.<init>(SessionManager.java:22)
+	at Main.main(Main.java:25)
+1170 [main] WARN com.documentum.fc.client.security.internal.RegistrationMgr  - [DFC_SECURITY_GR_PUBLICATION_FAILED] Publication of DFC instance with global registry failed
+DfException:: THREAD: main; MSG: [DFC_BOF_GLOBAL_REGISTRY_NOT_CONFIGURED] A global registry is not configured; ERRORCODE: ff; NEXT: null
+	at com.documentum.fc.client.security.impl.DfcIdentityPublisher.<init>(DfcIdentityPublisher.java:51)
+	at com.documentum.fc.client.security.internal.RegistrationMgr.register(RegistrationMgr.java:34)
+	at com.documentum.fc.impl.RuntimeContext.<clinit>(RuntimeContext.java:195)
+	at com.documentum.fc.client.DfClient.<clinit>(DfClient.java:772)
+	at com.documentum.com.DfClientX.getLocalClient(DfClientX.java:43)
+	at SessionManager.createSessionManager(SessionManager.java:33)
+	at SessionManager.<init>(SessionManager.java:22)
+	at Main.main(Main.java:25)
+0 [main] ERROR com.documentum.fc.common.impl.logging.LoggingConfigurator  - Problem locating log4j configuration
+0 [main] WARN com.documentum.fc.common.impl.logging.LoggingConfigurator  - Using default log4j configuration
+1 [main] ERROR com.documentum.fc.common.impl.preferences.PreferencesManager  - [DFC_PREFERENCE_LOAD_FAILED] Failed to load persistent preferences from null
+java.io.FileNotFoundException: dfc.properties
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.locateMainPersistentStore(PreferencesManager.java:378)
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.readPersistentProperties(PreferencesManager.java:329)
+	at com.documentum.fc.common.impl.preferences.PreferencesManager.<init>(PreferencesManager.java:37)
+	at com.documentum.fc.common.DfPreferences.initialize(DfPreferences.java:64)
+	at com.documentum.fc.common.DfPreferences.getInstance(DfPreferences.java:43)
+	at com.documentum.fc.client.DfSimpleDbor.getDefaultDbor(DfSimpleDbor.java:78)
+	at com.documentum.fc.client.DfSimpleDbor.<init>(DfSimpleDbor.java:66)
+	at com.documentum.fc.client.DfClient$ClientImpl.<init>(DfClient.java:350)
+	at com.documentum.fc.client.DfClient.<clinit>(DfClient.java:766)
+	at com.documentum.com.DfClientX.getLocalClient(DfClientX.java:43)
+	at SessionManager.createSessionManager(SessionManager.java:33)
+	at SessionManager.<init>(SessionManager.java:22)
+	at Main.main(Main.java:25)
+875 [main] WARN com.documentum.fc.client.security.internal.RegistrationMgr  - [DFC_SECURITY_GR_PUBLICATION_FAILED] Publication of DFC instance with global registry failed
+DfException:: THREAD: main; MSG: [DFC_BOF_GLOBAL_REGISTRY_NOT_CONFIGURED] A global registry is not configured; ERRORCODE: ff; NEXT: null
+	at com.documentum.fc.client.security.impl.DfcIdentityPublisher.<init>(DfcIdentityPublisher.java:51)
+	at com.documentum.fc.client.security.internal.RegistrationMgr.register(RegistrationMgr.java:34)
+	at com.documentum.fc.impl.RuntimeContext.<clinit>(RuntimeContext.java:195)
+	at com.documentum.fc.client.DfClient.<clinit>(DfClient.java:772)
+	at com.documentum.com.DfClientX.getLocalClient(DfClientX.java:43)
+	at SessionManager.createSessionManager(SessionManager.java:33)
+	at SessionManager.<init>(SessionManager.java:22)
+	at Main.main(Main.java:25)

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="export-documents-for-period">
+    <output-path>$PROJECT_DIR$/out/artifacts/export_documents_for_period</output-path>
+    <root id="archive" name="export-documents-for-period.jar">
+      <element id="module-output" name="ExportDocumentsForPeriod" />
+    </root>
+  </artifact>
+</component>
