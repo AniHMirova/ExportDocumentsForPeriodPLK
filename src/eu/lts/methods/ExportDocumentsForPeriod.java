@@ -7,6 +7,7 @@ import com.documentum.fc.common.DfException;
 import com.documentum.fc.common.DfId;
 import com.documentum.operations.IDfExportNode;
 import com.documentum.operations.IDfExportOperation;
+import eu.lts.handlers.ApplicationSettings;
 import ru.documentum.AbstractMethod;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 public class ExportDocumentsForPeriod extends AbstractMethod {
     private IDfSession session = null;
@@ -28,14 +30,16 @@ public class ExportDocumentsForPeriod extends AbstractMethod {
         final String TRACE_PREFIX1 = "[ExportDocumentsForPeriod]";
         final String TRACE_PREFIX = TRACE_PREFIX1 + "[execute]: ";
         IDfSession session;
+        Properties prb = new ApplicationSettings().getPropValues();
+
         try {
             System.out.println(TRACE_PREFIX + "---------------------------------------------------job started");
             session = getDfSession();
 
-            outputFile = getArgument("config_file", true);
-            fromDate = getArgument("from_date", true);
-            toDate = getArgument("to_date", true);
-            documentType = getArgument("document_type", true);
+            outputFile = prb.getProperty("outputFile");
+            documentType = prb.getProperty("documentType");
+            fromDate = prb.getProperty("fromDate");
+            toDate = prb.getProperty("toDate");
 
             PrintStream fileOutput = new PrintStream(outputFile + "\\outputResult.txt");
 
@@ -49,7 +53,8 @@ public class ExportDocumentsForPeriod extends AbstractMethod {
             System.out.println("toDate = [" + toDate + "]");
             System.out.println("documentType = [" + documentType + "]");
 
-            String allDocumentsQuery = MessageFormat.format("select r_object_id from {0} where dsdt_reg_date >= DATE(''{1}'') and  dsdt_reg_date <= DATE(''{2}'')", documentType, fromDate, toDate);
+            String query =     prb.getProperty("query");
+            String allDocumentsQuery = MessageFormat.format(query, documentType, fromDate, toDate);
 //            write  info in file
             fileOutput.println(TRACE_PREFIX1 + "[Export operation start for period: ]" + fromDate + " to " + toDate);
             fileOutput.println(TRACE_PREFIX1 + "[Query: ]" + allDocumentsQuery);
@@ -120,19 +125,27 @@ public class ExportDocumentsForPeriod extends AbstractMethod {
                         return 0;
                     }
 
+                    int year = docObj.getTime("r_creation_date").getYear();
+                    int month = docObj.getTime("r_creation_date").getMonth();
 
-                    File folder = new File((new StringBuilder(String.valueOf(outputFile))).append("\\").append(folder_name).toString());
+                    File folderYear = new File((new StringBuilder(String.valueOf(outputFile))).append("\\").append(year).toString());
+                    folderYear.mkdir();
+                    File folderMonth = new File((new StringBuilder(String.valueOf(outputFile))).append("\\").append(year).append("\\").append(month).toString());
+                    folderMonth.mkdir();
+                    File folder = new File((new StringBuilder(String.valueOf(outputFile))).append("\\").append(year).append("\\").append(month).append("\\").append(folder_name).toString());
                     folder.mkdir();
 
-                    String getPath = (new StringBuilder(String.valueOf(outputFile))).append("\\").append(folder_name).append("\\").toString();
+//                    File folder = new File((new StringBuilder(String.valueOf(outputFile))).append("\\").append(folder_name).toString());
+//                    folder.mkdir();
+
+                    String getPath = (new StringBuilder(String.valueOf(outputFile))).append("\\").append(year).append("\\").append(month).append("\\").append(folder_name).append("\\").toString();
 
                     System.out.println("folder = [" + folder.getName() + "]");
                     System.out.println("getPath = [" + getPath + "]");
 
 //            get all attached files
-                    String allAttachmentsQuery = MessageFormat.format("select r_object_id, r_object_type, a_content_type from ddt_document_content where r_object_id in " +
-                            "(select parent_id from dm_relation where child_id=''{0}'' and relation_name = ''DOC_APPENDIX'' and child_label IN " +
-                            "(SELECT r_version_label from ddt_registered (all) where r_object_id = ''{0}'')) and r_content_size>0 order by dsi_appendix_order", rObjectId);
+                    String queryAttachments =     prb.getProperty("queryForAttachments");
+                    String allAttachmentsQuery = MessageFormat.format(queryAttachments, rObjectId);
                     List<HashMap<String, String>> resultAttachmentsQuery = runQuery(session, allAttachmentsQuery);
                     String attachObjectId;
                     IDfSysObject attachObj;
@@ -161,7 +174,7 @@ public class ExportDocumentsForPeriod extends AbstractMethod {
                     IDfExportOperation operation = clientx.getExportOperation();
                     operation.setDestinationDirectory(getPath);
                     IDfExportNode node = (IDfExportNode) operation.add(docObj);
-//            node.setFormat( docObj.getFormat().getName() );
+                    node.setFormat( "pdf");
                     if (!operation.execute()) {
                         countFail ++;
                         fileOutput.println(TRACE_PREFIX1 + "[Failed] :" + docObj.getObjectId());
